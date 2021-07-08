@@ -1,25 +1,14 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import Service from "./services/http-service";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const services = new Service();
+  React.useEffect(() => {
+    services
+      .get("6b51d798-df9f-4e15-ac9b-03e42f912b5e")
+      .then((res) => console.log(res));
+  }, [services]);
+  return <div />;
 }
 
 export default App;
