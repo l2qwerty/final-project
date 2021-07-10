@@ -1,22 +1,32 @@
-const headers = {
-  "X-Foo-Bar": "Hello World",
-};
+/* eslint-disable class-methods-use-this */
+import React from "react";
+import { Redirect } from "react-router-dom";
 
-function joinURL(baseURL, url) {
-  return `${baseURL}/${url}`;
-}
-class Service {
-  constructor() {
-    this.domain = "https://run.mocky.io/v3/";
-  }
+const headers = { Accept: "application/json" };
+
+class Service extends React.Component {
+  state = {
+    redirect: false,
+  };
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true,
+    });
+  };
+
+  // eslint-disable-next-line consistent-return
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      // eslint-disable-next-line prettier/prettier
+      return <Redirect to='/login' />;
+    }
+  };
 
   request(url, method = "POST", data = null) {
-    // eslint-disable-next-line no-param-reassign
-    url = joinURL(this.domain, url);
     const options = {
-      headers,
       method,
-      mode: "no-cors",
+      headers,
     };
     if (data) {
       options.body = JSON.stringify({ ...data });
@@ -24,19 +34,34 @@ class Service {
     return fetch(url, options);
   }
 
-  get(url, id) {
+  get(url) {
     const method = "GET";
-    if (id) {
-      // eslint-disable-next-line no-param-reassign
-      url = `${url}/${id}`;
-    }
-    return this.request(url, method).then((res) => res.json());
+    return this.request(url, method).then(this.parseResponse);
   }
 
   post(url, data) {
     const method = "POST";
-    return this.request(url, method, data).then((res) => res.json());
+    return this.request(url, method, data).then(this.parseResponse);
+  }
+
+  parseResponse(response) {
+    return response
+      .json()
+      .then((json) => {
+        const modifiedJson = {
+          success: response.ok,
+          status: response.status,
+          statusText: response.statusText
+            ? response.statusText
+            : json.error || "",
+          response: json,
+        };
+        if (modifiedJson.status === 401) {
+          this.setRedirect();
+        } else if (modifiedJson.success) return JSON.stringify(modifiedJson);
+        return Promise.reject(JSON.stringify(modifiedJson));
+      })
+      .then((res) => JSON.parse(res));
   }
 }
-
 export default Service;

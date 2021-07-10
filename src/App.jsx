@@ -5,8 +5,11 @@ function App() {
   const services = new Service();
   React.useEffect(() => {
     services
-      .get("6b51d798-df9f-4e15-ac9b-03e42f912b5e")
-      .then((res) => console.log(res));
+      .get("https://run.mocky.io/v3/c87e58ab-40a9-416d-b4e0-85b20a6a0be1")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
   }, [services]);
   return <div />;
 }
