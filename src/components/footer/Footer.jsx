@@ -9,9 +9,9 @@ import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => ({
   footer: {
-    position: "fixed",
+    position: "inherit",
+    bottom: "0 !important",
     left: 0,
-    bottom: 0,
     width: "100%",
   },
   title: {
@@ -33,7 +33,7 @@ function Footer() {
       <Box borderTop={2} borderColor="grey.500">
         <Container className={classes.container}>
           <Grid item xs={12} container spacing={1}>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12} sm={1} lg={1}>
               <Box>
                 <Button href="#" color="primary">
                   Privacy
@@ -47,7 +47,7 @@ function Footer() {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={5} lg={6}>
               <Box textAlign="center">
                 <Typography variant="h4" className={classes.title}>
                   GetBooks
@@ -59,17 +59,17 @@ function Footer() {
                 </Typography>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12} sm={1} lg={1}>
               <Box>
                 <Button href="#">Support</Button>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12} sm={1} lg={1}>
               <Box>
                 <Button href="#">Sign up</Button>
               </Box>
             </Grid>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12} sm={2} lg={1}>
               <Box>
                 <Button href="#">Sign in</Button>
               </Box>
