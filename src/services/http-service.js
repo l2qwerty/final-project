@@ -1,27 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import { Redirect } from "react-router-dom";
-
 const headers = { Accept: "application/json" };
-
+const baseURL = "https://run.mocky.io/v3/c87e58ab-40a9-416d-b4e0-85b20a6a0be1";
 class Service {
-  state = {
-    redirect: false,
-  };
-
-  setRedirect = () => {
-    this.setState({
-      redirect: true,
-    });
-  };
-
-  // eslint-disable-next-line consistent-return
-  renderRedirect = () => {
-    if (this.state.redirect) {
-      /* return <Redirect to="/login" />; */
-    }
-  };
-
-  static request(url, method = "POST", data = null) {
+  static request(path, method = "POST", data = null) {
+    const url = `${baseURL}${path}`;
     const options = {
       method,
       headers,
@@ -32,14 +14,14 @@ class Service {
     return fetch(url, options);
   }
 
-  static get(url) {
+  static get(path = "") {
     const method = "GET";
-    return this.request(url, method).then(this.parseResponse);
+    return this.request(path, method).then(this.parseResponse);
   }
 
-  static post(url, data) {
+  static post(path = "", data) {
     const method = "POST";
-    return this.request(url, method, data).then(this.parseResponse);
+    return this.request(path, method, data).then(this.parseResponse);
   }
 
   static parseResponse(response) {
@@ -55,7 +37,7 @@ class Service {
           response: json,
         };
         if (modifiedJson.status === 401) {
-          this.setRedirect();
+          Promise.reject(JSON.stringify(modifiedJson.statusText));
         } else if (modifiedJson.success) return JSON.stringify(modifiedJson);
         return Promise.reject(JSON.stringify(modifiedJson));
       })
