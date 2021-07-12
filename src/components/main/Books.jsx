@@ -6,7 +6,7 @@ import Service from "../../services/http-service";
 function Books() {
   const [cards, setCards] = useState([]);
   useEffect(() => {
-    Service.get("http://localhost:8000/goods")
+    Service.get("/goods")
       .then((res) => setCards(res.response))
       .catch((error) => {
         throw new Error(error);

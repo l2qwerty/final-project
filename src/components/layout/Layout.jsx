@@ -3,7 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Header from "../header/Header";
 import Footer from "../footer/Footer";
-import Main from "../main/Main";
+import Routes from "../../routes/Routes";
 
 const useStyles = makeStyles({
   container: {
@@ -19,7 +19,7 @@ function Layout() {
         <Header />
       </Grid>
       <Grid item xs={12}>
-        <Main />
+        <Routes />
       </Grid>
       <Grid item xs={12}>
         <Footer />

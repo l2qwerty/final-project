@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuBookTwoToneIcon from "@material-ui/icons/MenuBookTwoTone";
 import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     position: "static",
   },
   link: {
-    textDecoration: "none",
+    marginLeft: "10px",
   },
 }));
 
@@ -54,17 +53,30 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             GetBooks
           </Typography>
-          <Link className={(classes.link, classes.button)} to="/contacts">
-            <Button>Contacts</Button>
-          </Link>
-          <Link className={(classes.link, classes.button)} to="/cart">
-            <Button variant="contained">Cart</Button>
-          </Link>
-          <Link className={(classes.link, classes.button)} to="/login">
-            <Button variant="contained" color="primary">
+          <div className={classes.link}>
+            <Link
+              className="MuiButtonBase-root MuiButton-root MuiButton-text"
+              to="/contacts"
+            >
+              Contacts
+            </Link>
+          </div>
+          <div className={classes.link}>
+            <Link
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained"
+              to="/cart"
+            >
+              Cart
+            </Link>
+          </div>
+          <div className={classes.link}>
+            <Link
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+              to="/login"
+            >
               Log Out
-            </Button>
-          </Link>
+            </Link>
+          </div>
         </Toolbar>
       </AppBar>
     </header>
