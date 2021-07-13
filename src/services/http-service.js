@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 const headers = { Accept: "application/json" };
 const baseURL = "http://localhost:8000";
 class Service {
@@ -37,7 +36,7 @@ class Service {
           response: json,
         };
         if (modifiedJson.status === 401) {
-          Promise.reject(JSON.stringify(modifiedJson.statusText));
+          window.location.assign("/login");
         } else if (modifiedJson.success) return JSON.stringify(modifiedJson);
         return Promise.reject(JSON.stringify(modifiedJson));
       })

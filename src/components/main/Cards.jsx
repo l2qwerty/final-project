@@ -1,8 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -11,26 +9,29 @@ import DeleteTwoToneIcon from "@material-ui/icons/DeleteTwoTone";
 import StarTwoToneIcon from "@material-ui/icons/StarTwoTone";
 import ShareTwoToneIcon from "@material-ui/icons/ShareTwoTone";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
     marginBottom: "30px",
   },
-  btnLeft: {
-    justifyContent: "flex-start",
-  },
   btnRight: {
     marginLeft: "auto!important",
   },
+  link: {
+    textDecoration: "none",
+    color: "black",
+  },
 });
 
-function Cards({ title, img, alt, text }) {
+function Cards({ title, img, alt, text, path }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
+      <Link to={path} className={classes.link}>
         <Typography gutterBottom variant="h5" component="h2">
           {title}
         </Typography>
@@ -40,24 +41,44 @@ function Cards({ title, img, alt, text }) {
             {text}
           </Typography>
         </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <div className={classes.btnLeft}>
-          <IconButton aria-label="add to favorites">
+        <CardActions>
+          <IconButton
+            aria-label="add to favorites"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <StarTwoToneIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton
+            aria-label="share"
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <ShareTwoToneIcon />
           </IconButton>
-        </div>
-        <div className={classes.btnRight}>
-          <IconButton aria-label="delete">
+          <IconButton
+            aria-label="delete"
+            className={classes.btnRight}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
             <DeleteTwoToneIcon />
           </IconButton>
-        </div>
-      </CardActions>
+        </CardActions>
+      </Link>
     </Card>
   );
 }
+
+Cards.propTypes = {
+  title: PropTypes.string.isRequired,
+  img: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
+};
 
 export default Cards;
