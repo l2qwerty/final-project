@@ -1,15 +1,11 @@
 import React from "react";
-import Service from "./services/http-service";
+import Layout from "./components/layout/Layout";
 
 function App() {
-  React.useEffect(() => {
-    Service.get()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => console.log(error));
-  }, [Service]);
-  return <div />;
+  return (
+    <div>
+      <Layout />
+    </div>
+  );
 }
-
 export default App;
