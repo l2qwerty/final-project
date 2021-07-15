@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import MenuBookTwoToneIcon from "@material-ui/icons/MenuBookTwoTone";
 import { Link } from "react-router-dom";
 
@@ -32,26 +31,23 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     marginLeft: "10px",
+    textDecoration: "none",
+    color: "black",
   },
 }));
 
-export default function ButtonAppBar() {
+function Header() {
   const classes = useStyles();
 
   return (
     <header className={classes.root}>
       <AppBar className={classes.header}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuBookTwoToneIcon />
-          </IconButton>
+          <MenuBookTwoToneIcon />
           <Typography variant="h6" className={classes.title}>
-            GetBooks
+            <Link to="/books" className={classes.link}>
+              GetBooks
+            </Link>
           </Typography>
           <div className={classes.link}>
             <Link
@@ -82,3 +78,5 @@ export default function ButtonAppBar() {
     </header>
   );
 }
+
+export default Header;

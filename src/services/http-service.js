@@ -1,6 +1,5 @@
-/* eslint-disable class-methods-use-this */
 const headers = { Accept: "application/json" };
-const baseURL = "https://run.mocky.io/v3/c87e58ab-40a9-416d-b4e0-85b20a6a0be1";
+const baseURL = "http://localhost:8000";
 class Service {
   static request(path, method = "POST", data = null) {
     const url = `${baseURL}${path}`;
@@ -37,7 +36,7 @@ class Service {
           response: json,
         };
         if (modifiedJson.status === 401) {
-          Promise.reject(JSON.stringify(modifiedJson.statusText));
+          window.location.assign("/login");
         } else if (modifiedJson.success) return JSON.stringify(modifiedJson);
         return Promise.reject(JSON.stringify(modifiedJson));
       })
