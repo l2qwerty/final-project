@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Contacts from "../components/header/Contacts";
-import Cart from "../components/header/Cart";
+import Cart from "../components/main/Cart/Cart";
 import Logout from "../components/header/Logout";
 import BooksRoutes from "./books/BooksRoutes";
 import NotFound from "../components/NotFound";

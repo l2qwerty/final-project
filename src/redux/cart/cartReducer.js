@@ -4,6 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   cartNumber: 0,
   cards: [],
+  counter: [],
+  amount: 1,
 };
 
 export const cartSlice = createSlice({
@@ -26,12 +28,19 @@ export const cartSlice = createSlice({
         state.cartNumber -= 1;
       }
     },
+    addCount: (state, action) => {
+      state.counter.push(action.payload);
+      state.amount += 1;
+    },
+    degCount: (state, action) => {
+      state.amount -= 1;
+    },
   },
 });
 
 export const { actions, reducer } = cartSlice;
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, addCount, degCount } = cartSlice.actions;
 
 export const selectCartNumber = (state) => state.cart.cartNumber;
 

@@ -33,6 +33,7 @@ function Books() {
               <Cards
                 id={item.id}
                 title={item.title}
+                coast={item.coast}
                 img={item.img}
                 alt={item.alt}
                 text={item.text}
