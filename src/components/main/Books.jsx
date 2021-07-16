@@ -6,10 +6,12 @@ import Service from "../../services/http-service";
 import MainSlider from "./Slider/Slider";
 
 function Books() {
-  const [cards, setCards] = useState(null);
+  const [goods, setCards] = useState(null);
   useEffect(() => {
     Service.get("/goods")
-      .then((res) => setCards(res.response))
+      .then((res) => {
+        setCards(res.response);
+      })
       .catch((error) => {
         throw new Error(error);
       });
@@ -17,9 +19,9 @@ function Books() {
   return (
     <>
       <MainSlider />
-      {cards ? (
+      {goods ? (
         <Grid container justifyContent="center" alignItems="center">
-          {cards.map((item) => (
+          {goods.map((item) => (
             <Grid
               item
               lg={4}
@@ -29,6 +31,7 @@ function Books() {
               key={item.id}
             >
               <Cards
+                id={item.id}
                 title={item.title}
                 img={item.img}
                 alt={item.alt}
