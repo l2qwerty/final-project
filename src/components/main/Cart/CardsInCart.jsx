@@ -28,8 +28,10 @@ const useStyles = makeStyles({
   },
 });
 function CardsInCart({ id, title, coast, img, alt, text, path }) {
-  const cards = useSelector((state) => state.cart.cards);
-  const counter = useSelector((state) => state.cart.amount);
+  const amount = useSelector(
+    (state) => state.cart.cards.find((e) => e.id === id).amount
+  );
+  const count = coast * amount;
   const dispatch = useDispatch();
   const classes = useStyles();
   return (
@@ -48,20 +50,20 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
           <IconButton
             aria-label="add +1"
             onClick={(e) => {
-              dispatch(addCount());
+              dispatch(addCount(id));
               e.preventDefault();
             }}
           >
             <ExposurePlus1Icon />
           </IconButton>
-          <Typography gutterBottom variant="h5" component="h2">
-            amount: {counter}
+          <Typography gutterBottom variant="h6" component="h2">
+            amount: {amount}
           </Typography>
           <IconButton
             aria-label="remove -1"
             onClick={(e) => {
               // eslint-disable-next-line no-unused-expressions
-              counter > 1 ? dispatch(degCount()) : e.preventDefault();
+              amount > 1 ? dispatch(degCount(id)) : e.preventDefault();
               e.preventDefault();
             }}
           >
@@ -73,13 +75,13 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
             component="h2"
             className={classes.btnRight}
           >
-            {coast * counter}$
+            {count}$
           </Typography>
           <IconButton
             aria-label="delete card"
             className={classes.btnRight}
             onClick={(e) => {
-              dispatch(addToCart({ id }));
+              dispatch(addToCart(id));
               e.preventDefault();
             }}
           >

@@ -19,7 +19,6 @@ function Cart() {
       });
   }, []);
   const cards = useSelector((state) => state.cart.cards);
-  console.log(goods, cards);
 
   return (
     <div>

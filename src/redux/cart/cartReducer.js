@@ -4,8 +4,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   cartNumber: 0,
   cards: [],
-  counter: [],
-  amount: 1,
 };
 
 export const cartSlice = createSlice({
@@ -13,8 +11,8 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      if (!state.cards.some((item) => item.id === action.payload.id)) {
-        state.cards.push(action.payload);
+      if (!state.cards.some((item) => item.id === action.payload)) {
+        state.cards.push({ id: action.payload, amount: 1 });
         state.cartNumber += 1;
       } else {
         state.cards.splice(
@@ -22,18 +20,17 @@ export const cartSlice = createSlice({
             .map((e) => {
               return e.id;
             })
-            .indexOf(action.payload.id),
+            .indexOf(action.payload),
           1
         );
         state.cartNumber -= 1;
       }
     },
     addCount: (state, action) => {
-      state.counter.push(action.payload);
-      state.amount += 1;
+      state.cards.find((e) => e.id === action.payload).amount += 1;
     },
     degCount: (state, action) => {
-      state.amount -= 1;
+      state.cards.find((e) => e.id === action.payload).amount -= 1;
     },
   },
 });
