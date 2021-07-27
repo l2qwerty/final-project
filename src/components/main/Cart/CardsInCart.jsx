@@ -12,7 +12,11 @@ import ExposureNeg1Icon from "@material-ui/icons/ExposureNeg1";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { PropTypes } from "prop-types";
-import { addToCart, addCount, degCount } from "../../../redux/cart/cartReducer";
+import {
+  addToCart,
+  addAmount,
+  degAmount,
+} from "../../../redux/cart/cartReducer";
 
 const useStyles = makeStyles({
   root: {
@@ -31,7 +35,9 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
   const amount = useSelector(
     (state) => state.cart.cards.find((e) => e.id === id).amount
   );
-  const count = coast * amount;
+  const count = useSelector(
+    (state) => state.cart.cards.find((e) => e.id === id).coast
+  );
   const dispatch = useDispatch();
   const classes = useStyles();
   return (
@@ -50,7 +56,7 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
           <IconButton
             aria-label="add +1"
             onClick={(e) => {
-              dispatch(addCount(id));
+              dispatch(addAmount({ id, coast }));
               e.preventDefault();
             }}
           >
@@ -63,7 +69,9 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
             aria-label="remove -1"
             onClick={(e) => {
               // eslint-disable-next-line no-unused-expressions
-              amount > 1 ? dispatch(degCount(id)) : e.preventDefault();
+              amount > 1
+                ? dispatch(degAmount({ id, coast }))
+                : e.preventDefault();
               e.preventDefault();
             }}
           >
@@ -81,7 +89,7 @@ function CardsInCart({ id, title, coast, img, alt, text, path }) {
             aria-label="delete card"
             className={classes.btnRight}
             onClick={(e) => {
-              dispatch(addToCart(id));
+              dispatch(addToCart({ id }));
               e.preventDefault();
             }}
           >

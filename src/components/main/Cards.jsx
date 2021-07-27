@@ -74,7 +74,7 @@ function Cards({ id, title, coast, img, alt, text, path }) {
             aria-label="buy"
             className={classes.btnRight}
             onClick={(e) => {
-              dispatch(addToCart(id));
+              dispatch(addToCart({ id, coast }));
               e.preventDefault();
             }}
           >

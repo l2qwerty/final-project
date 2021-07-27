@@ -11,8 +11,12 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      if (!state.cards.some((item) => item.id === action.payload)) {
-        state.cards.push({ id: action.payload, amount: 1 });
+      if (!state.cards.some((item) => item.id === action.payload.id)) {
+        state.cards.push({
+          id: action.payload.id,
+          amount: 1,
+          coast: action.payload.coast,
+        });
         state.cartNumber += 1;
       } else {
         state.cards.splice(
@@ -20,24 +24,34 @@ export const cartSlice = createSlice({
             .map((e) => {
               return e.id;
             })
-            .indexOf(action.payload),
+            .indexOf(action.payload.id),
           1
         );
         state.cartNumber -= 1;
       }
     },
-    addCount: (state, action) => {
-      state.cards.find((e) => e.id === action.payload).amount += 1;
+    addAmount: (state, action) => {
+      state.cards.find((e) => e.id === action.payload.id).amount += 1;
+      state.cards.find((e) => e.id === action.payload.id).coast =
+        action.payload.coast *
+        state.cards.find((e) => e.id === action.payload.id).amount;
     },
-    degCount: (state, action) => {
-      state.cards.find((e) => e.id === action.payload).amount -= 1;
+    degAmount: (state, action) => {
+      state.cards.find((e) => e.id === action.payload.id).amount -= 1;
+      state.cards.find((e) => e.id === action.payload.id).coast =
+        action.payload.coast *
+        state.cards.find((e) => e.id === action.payload.id).amount;
+    },
+    clearCart: (state) => {
+      state.cards = [];
+      state.cartNumber = 0;
     },
   },
 });
 
 export const { actions, reducer } = cartSlice;
 
-export const { addToCart, addCount, degCount } = cartSlice.actions;
+export const { addToCart, addAmount, degAmount, clearCart } = cartSlice.actions;
 
 export const selectCartNumber = (state) => state.cart.cartNumber;
 
