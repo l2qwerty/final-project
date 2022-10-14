@@ -1,13 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { Button } from "@material-ui/core";
 import CardsInCart from "./CardsInCart";
 import Service from "../../../services/http-service";
-import { clearCart } from "../../../redux/cart/cartReducer";
 
 function Cart() {
   const [goods, setCards] = useState(null);
@@ -21,16 +19,6 @@ function Cart() {
       });
   }, []);
   const cards = useSelector((state) => state.cart.cards);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const onClickHandler = () => {
-    Service.post("/cart", cards).then((res) => {
-      if (res.success) {
-        dispatch(clearCart());
-        history.push("/books");
-      }
-    });
-  };
 
   return (
     <div>
@@ -64,14 +52,12 @@ function Cart() {
                   />
                 </Grid>
               ))}
-            <Button
-              variant="contained"
-              onClick={() => {
-                onClickHandler();
-              }}
+            <Link
+              to="/checkout"
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained"
             >
               Checkout
-            </Button>
+            </Link>
           </Grid>
         ) : (
           <Grid container justifyContent="center" alignItems="center">
